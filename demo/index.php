@@ -30,7 +30,7 @@ $post_json = json_encode($_POST);
 	});
 	</script>
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="../doc/css/prettify-ca.css">
+	<link rel="stylesheet" type="text/css" href="../doc/css/prettify.css">
 	<link rel="stylesheet" type="text/css" href="../doc/css/style.css">
 	<script type="text/javascript">//<![CDATA[
 // Google Analytics

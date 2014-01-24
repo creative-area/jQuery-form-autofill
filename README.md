@@ -1,11 +1,11 @@
-#jQuery form autofill
+# jQuery form autofill
 
 jQuery plugin to simply autofill an empty form with data.
 
 
 ## Documentation
 
-See complete documentation and demo : http://labs.creative-area.net/jquery.formautofill/
+<a href="http://labs.creative-area.net/jquery.formautofill/doc/">See complete documentation and demo</a>
 
 
 ## Usage
