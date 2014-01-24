@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta http-equiv="content-style-type" content="text/css">
+	<meta http-equiv="content-script-type" content="text/javascript">
+	<title>jQuery form autofill by Creative Area</title>
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<link rel="shortcut icon" href="http://www.creative-area.net/favicon.ico">
+	<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+	<!--[if lt IE 9]>
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.js"></script>
+	<script type="text/javascript" src="js/beautify.js"></script>
+	<script type="text/javascript" src="../jquery.formautofill.min.js"></script>
+	<script type="text/javascript">
+	$(document).ready(function(){
+		var data = {
+			'input':'input unit test',
+			'select':'3',
+			'multiselect':['1','4'],
+			'textarea':'textarea unit test',
+			'checkbox_checked':'1',
+			'checkbox_not_checked':'0',
+			'checkbox_multiple':['1','3'],
+			'radio':'off',
+			'field_not_exist':'noop'
+		};
+		
+		$('#predata').html(
+			js_beautify(
+				'var data = ' + JSON.stringify(data) + ';'
+				+ '$( "#f_unit_test .clickaction_by_name" ).bind( "click", function(){'
+				+ '$( "#f_unit_test" ).autofill( data );'
+				+ '});'
+				+ '$( "#f_unit_test .clickaction_by_id" ).bind( "click", function(){'
+				+ '$( "#f_unit_test" ).autofill( data, { findbyname: false, restrict: false } );'
+				+ '});'
+		    )
+		);
+		prettyPrint();
+		
+		// bind demo events
+		// try it!
+		$('#f_try .clickaction').bind( 'click', function() {
+			$('#f_try').autofill({
+				"name": "John Doe",
+				"email": "johndoe@mail.com",
+				"lovejquery": "yes"
+			});
+		});
+		// example findbyname = false
+		$('#f_findbyname .clickaction').bind( 'click', function() {
+			$('#f_findbyname').autofill({
+				"name_id": "John Doe",
+				"email_id": "johndoe@mail.com",
+				"lovejquery": "yes"
+			}, {
+				findbyname: false
+			});
+		});
+		// example restrict = false
+		$('#f_restrict .clickaction').bind( 'click', function() {
+			$('body').autofill({
+				"name_not_restricted": "John Doe",
+				"email_not_restricted": "johndoe@mail.com"
+			}, {
+				findbyname: false,
+				restrict: false
+			});
+		});
+		// example restrict only
+		$('#f_restrict_only .clickaction').bind( 'click', function() {
+			$('body').autofill({
+				"name_multiple": "John Doe",
+				"email_multiple": "johndoe@mail.com"
+			}, {
+				restrict: false
+			});
+		});
+		// example unit tests (by name)
+		$('#f_unit_test .clickaction_name').bind('click', function(){
+			$('#f_unit_test').autofill( data );
+		});
+		// example unit tests (by id)
+		$('#f_unit_test .clickaction_id').bind('click', function(){
+			$('#f_unit_test').autofill( data, {
+				findbyname: false,
+				restrict: false
+			});
+		});
+	});
+	</script>
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="css/prettify-ca.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<script type="text/javascript">//<![CDATA[
+// Google Analytics
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount','UA-5479812-6']);
+_gaq.push(['_trackPageview']);
+(function() {
+	var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+	ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
+//]]>
+</script>
+</head>
+<body>
+	<div class="navbar navbar-fixed-top navbar-inverse">
+		<a href="https://github.com/creative-area/jQuery-form-autofill"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub"></a>
+        <div class="navbar-inner">
+			<div class="container">
+				<a class="brand" href="#">jQuery form autofill</a>
+				<ul class="nav">
+					<li><a href="#download">download</a></li>
+					<li><a href="#howtouse">how to use</a></li>
+					<li><a href="#optionalparams">options</a></li>
+					<li><a href="#examples">examples</a></li>
+					<li><a href="../demo/">demo</a></li>
+				</ul>
+			</div>
+        </div>
+    </div>
+    
+	<div class="container">
+		<div class="content">
+		
+		   	<h1>jQuery form autofill</h1>
+		   	
+		   	simply autofill an empty form with data.
+			
+			<section id="download">
+				<h2>Download</h2>
+				
+				<p></p>
+				<a href="js/jquery.formautofill.js" class="btn" target="_blank">jquery.formautofill.js</a>
+				&nbsp;
+				<a href="js/jquery.formautofill.min.js" class="btn btn-success" target="_blank">jquery.formautofill.min.js</a>
+			</section>
+			
+			<section id="howtouse">
+			<div class="row">
+			
+				<div class="span10">
+					<h2>How to use it</h2>
+		
+					<p></p>
+					<p>you have a <span class="label label-warning">form</span></p>
+
+<pre class="prettyprint">
+&lt;form id="f"&gt;
+    name &lt;input type="text" name="name"&gt;
+    email &lt;input type="text" name="email"&gt;
+    love jQuery
+    &lt;input type="radio" name="lovejquery" value="yes"&gt; yes
+    &lt;input type="radio" name="lovejquery" value="no"&gt; no
+&lt;/form&gt;
+</pre>
+
+					<p>and <span class="label label-warning">data</span></p>
+
+<pre class="prettyprint">
+var data = {
+    "name": "John Doe",
+    "email": "johndoe@mail.com",
+    "lovejquery": "yes"
+}
+</pre>
+
+					<p><span class="label label-warning">autofill</span> the form with data ? just do</p>
+
+<pre class="prettyprint">
+$("#f").autofill( data );
+</pre>
+			
+				</div>
+				
+				<div class="span6">
+					<form id="f_try" class="form-stacked">
+						<h2>Try it !</h2>
+						<p></p>
+						<div class="clearfix">
+					    	<label for="name">name</label>
+					    	<div class="input"><input type="text" name="name"></div>
+					    </div>
+						<div class="clearfix">
+					    	<label for="email">email</label>
+					    	<div class="input"><input type="text" name="email"></div>
+					    </div>
+						<div class="clearfix">
+					    	<label for="lovejquery_try">love jQuery</label>
+					    	<div class="input">
+					    		<input type="radio" name="lovejquery" value="yes"> yes
+					    		&nbsp;
+					    		<input type="radio" name="lovejquery" value="no"> no
+					    	</div>
+					    </div>
+					    <input type="button" class="btn btn-info clickaction" value="autofill the form with data">
+					    <input class="btn" type="reset" value="reset" />
+					</form>
+					<p></p>
+				</div>
+				
+			</div>
+			</section>
+		
+			<section id="optionalparams">
+			
+				<h2>Optional parameters:</h2>
+	
+				<p></p>
+				<p>you can pass an optional object as second argument. available <span class="label label-success">options</span> with <span class="label label-important">default values</span> are</p>
+
+<pre class="prettyprint">
+var options = {
+    findbyname: true,
+    restrict: true
+}
+// autofill with options :
+$("#f").autofill( data, options );
+</pre>
+
+				<p><span class="label label-success">findbyname</span> <span class="label label-important">true</span> : if true, find elements by name attribute. if false, find elements by id.</p>
+				<p><span class="label label-success">restrict</span> <span class="label label-important">true</span> : if true, restrict the fields search in the node childs. if false, search in all the document.</p>
+	
+			</section>
+			
+			<section id="examples">
+				<h2>Examples</h2>
+				<p></p>
+			</section>
+			
+			<section id="example-findbyname">
+				<h3><span class="label label-success">findbyname</span> <span class="label label-important">false</span></h3>
+				
+				<div class="row">
+					<div class="span10">
+<pre class="prettyprint">
+&lt;form id="f_findbyname"&gt;
+    name &lt;input type="text" name="name" id="name_id"&gt;
+    email &lt;input type="text" name="email" id="email_id"&gt;
+    love jQuery
+    &lt;input type="radio" name="lovejquery" id="lovejquery_yes"
+     value="yes"&gt; yes
+    &lt;input type="radio" name="lovejquery" id="lovejquery_no"
+     value="no"&gt; no
+    &lt;input type="button" class="btn" value="autofill by id"&gt;
+&lt;/form&gt;
+
+&lt;script&gt;
+var data = {
+    "name_id": "John Doe",
+    "email_id": "johndoe@mail.com",
+    // always use "name" to find radio or checkbox multiple
+    "lovejquery": "yes"
+}
+$("#f_findbyname .btn").bind("click", function() {
+    $("#f_findbyname").autofill(data, {
+        findbyname: false
+    });
+});
+&lt;/script&gt;
+</pre>
+			   		</div>
+			   		
+					<div class="span6">
+						<p></p>
+						<form id="f_findbyname" class="form-stacked">
+							<div class="clearfix">
+						    	<label for="name">name</label>
+						    	<div class="input"><input type="text" name="name" id="name_id"></div>
+						    </div>
+							<div class="clearfix">
+						    	<label for="email">email</label>
+						    	<div class="input"><input type="text" name="email" id="email_id"></div>
+						    </div>
+							<div class="clearfix">
+						    	<label for="lovejquery_try">love jQuery</label>
+						    	<div class="input">
+						    		<input type="radio" name="lovejquery" value="yes"> yes
+						    		&nbsp;
+						    		<input type="radio" name="lovejquery" value="no"> no
+						    	</div>
+						    </div>
+						    <input type="button" class="btn btn-info clickaction" value="autofill by id">
+						    <input class="btn" type="reset" value="reset" />
+						</form>
+						<p></p>
+					</div>
+				</div>
+			</section>
+	
+			<section id="example-restrict">
+				<p>&nbsp;</p>
+				<p><span class="label label-success">restrict</span> <span class="label label-important">false</span> , <span class="label label-success">findbyname</span> <span class="label label-important">false</span></p>
+				
+				<div class="row">
+					<div class="span10">
+<pre class="prettyprint">
+&lt;form id="f_restrict"&gt;
+    name &lt;input type="text" name="name" id="name_not_restricted"&gt;
+    email &lt;input type="text" name="email" id="email_not_restricted"&gt;
+    &lt;input type="button" class="btn" value="autofill by id"&gt;
+&lt;/form&gt;
+
+&lt;script&gt;
+var data = {
+    "name_not_restricted": "John Doe",
+    "email_not_restricted": "johndoe@mail.com"
+}
+$("#f_restrict .btn").bind("click", function() {
+    $("body").autofill(data, {
+        findbyname: false,
+        restrict: false
+    });
+});
+&lt;/script&gt;
+</pre>
+			   		</div>
+			   		
+					<div class="span6">
+						<p></p>
+						<form id="f_restrict" class="form-stacked">
+							<div class="clearfix">
+						    	<label for="name">name</label>
+						    	<div class="input"><input type="text" name="name" id="name_not_restricted"></div>
+						    </div>
+							<div class="clearfix">
+						    	<label for="email">email</label>
+						    	<div class="input"><input type="text" name="email" id="email_not_restricted"></div>
+						    </div>
+						    <input type="button" class="btn btn-info clickaction" value="autofill not restricted">
+						    <input class="btn" type="reset" value="reset" />
+						</form>
+						<p></p>
+					</div>
+				</div>
+			</section>
+	
+			<section id="example-restrict">
+				<p>&nbsp;</p>
+				<p><span class="label label-success">restrict</span> <span class="label label-important">false</span> , <span class="label label-success">findbyname</span> <span class="label label-important">true</span></p>
+				
+				<div class="row">
+					<div class="span10">
+<pre class="prettyprint">
+&lt;form&gt;
+    &lt;legend&gt;First form&lt;/legend&gt;
+    name &lt;input type="text" name="name_multiple"&gt;
+    email &lt;input type="text" name="email_multiple"&gt;
+&lt;/form&gt;
+&lt;form&gt;
+    &lt;legend&gt;Second form&lt;/legend&gt;
+    name &lt;input type="text" name="name_multiple"&gt;
+    email &lt;input type="text" name="email_multiple"&gt;
+    &lt;div id="f_restrict_only"&gt;
+        &lt;input type="button" class="clickaction" value="autofill"&gt;
+    &lt;/div&gt;
+&lt;/form&gt;
+
+&lt;script&gt;
+var data = {
+    "name_multiple": "John Doe",
+    "email_multiple": "johndoe@mail.com"
+}
+$("#f_restrict_only .clickaction").bind("click", function() {
+    $("body").autofill(data, {
+        restrict: false
+    });
+});
+&lt;/script&gt;
+</pre>
+			   		</div>
+			   		
+					<div class="span6">
+						<p></p>
+						<form class="form-stacked">
+							<legend>First form</legend>
+							<div class="clearfix">
+						    	<label for="name">name</label>
+						    	<div class="input"><input type="text" name="name_multiple"></div>
+						    </div>
+							<div class="clearfix">
+						    	<label for="email">email</label>
+						    	<div class="input"><input type="text" name="email_multiple"></div>
+						    </div>
+							<input class="btn" type="reset" value="reset" />
+						</form>
+						<form class="form-stacked">
+							<legend>Second form</legend>
+							<div class="clearfix">
+						    	<label for="name">name</label>
+						    	<div class="input"><input type="text" name="name_multiple"></div>
+						    </div>
+							<div class="clearfix">
+						    	<label for="email">email</label>
+						    	<div class="input"><input type="text" name="email_multiple"></div>
+						    </div>
+							<div id="f_restrict_only">
+							    <input type="button" class="btn btn-info clickaction" value="autofill">
+							    <input class="btn" type="reset" value="reset" />
+							</div>
+						</form>
+						<p></p>
+					</div>
+				</div>
+			</section>
+			
+			<section id="example-elements">
+				<p>&nbsp;</p>
+				<h3>With all html elements - my "unit test" <span class="smiley"></span></h3>
+		   		
+				<div class="row">
+					<div class="span10">
+						<pre id="predata" class="prettyprint"></pre>
+						
+			   			<div id="c"></div>
+			   		</div>
+			   		
+					<div class="span6">
+			   			
+						<form id="f_unit_test" class="form-stacked" action="" method="post" enctype="multipart/form-data">
+							<fieldset>
+								<div class="clearfix">
+									<label for="input">input text</label>
+									<div class="input">
+										<input class="span4" name="input" id="input" type="text">
+									</div>
+								</div><!-- /clearfix -->
+								
+								<div class="clearfix">
+									<label for="notfill">not filled</label>
+									<div class="input">
+										<input class="span4" name="notfill" id="notfill" type="text">
+									</div>
+								</div><!-- /clearfix -->
+									
+								<div class="clearfix">
+									<label for="select">select</label>
+									<div class="input">
+										<select name="select" id="select" class="span4">
+										<option value="1">value = 1</option>
+										<option value="2">value = 2</option>
+										<option value="3">value = 3</option>
+										<option value="4">value = 4</option>
+										<option value="5">value = 5</option>
+										</select>
+									</div>
+								</div><!-- /clearfix -->
+									
+								<div class="clearfix">
+									<label for="multiselect">multiple select</label>
+									<div class="input">
+										<select name="multiselect[]" id="multiselect" class="span4" multiple="multiple" size="4">
+										<option value="1">value = 1</option>
+										<option value="2">value = 2</option>
+										<option value="3">value = 3</option>
+										<option value="4">value = 4</option>
+										<option value="5">value = 5</option>
+										</select>
+									</div>
+								</div><!-- /clearfix -->
+								
+								<div class="clearfix">
+									<label for="textarea">textarea</label>
+									<div class="input">
+										<textarea class="span4" name="textarea" id="textarea" rows="3"></textarea>
+									</div>
+								</div><!-- /clearfix -->
+								
+								<div class="clearfix">
+									<label for="checkbox_checked">checkbox checked</label>
+									<div class="input">
+										<ul class="inputs-list">
+											<li>
+												<label>
+													<input name="checkbox_checked" id="checkbox_checked" value="1" type="checkbox">
+													<span>value = 1</span>
+												</label>
+											</li>
+										</ul>
+									</div>
+								</div><!-- /clearfix -->
+								
+								<div class="clearfix">
+									<label for="checkbox_not_checked">and not checked</label>
+									<div class="input">
+										<ul class="inputs-list">
+											<li>
+												<label>
+													<input name="checkbox_not_checked" id="checkbox_not_checked" value="1" type="checkbox">
+													<span>value = 1</span>
+												</label>
+											</li>
+										</ul>
+									</div>
+								</div><!-- /clearfix -->
+								
+								<div class="clearfix">
+									<label for="checkbox_multiple">checkbox multiple</label>
+									<div class="input">
+										<ul class="inputs-list inputs-list-hack">
+											<li>
+												<label>
+													<input name="checkbox_multiple[]" value="1" type="checkbox">
+													<span>1</span>
+												</label>
+											</li>
+											<li>
+												<label>
+													<input name="checkbox_multiple[]" value="2" type="checkbox">
+													<span>2</span>
+												</label>
+											</li>
+											<li>
+												<label>
+													<input name="checkbox_multiple[]" value="3" type="checkbox">
+													<span>3</span>
+												</label>
+											</li>
+											<li>
+												<label>
+													<input name="checkbox_multiple[]" value="4" type="checkbox">
+													<span>4</span>
+												</label>
+											</li>
+										</ul>
+									</div>
+								</div><!-- /clearfix -->
+								
+								<div class="clearfix">
+									<label for="radio">radio</label>
+									<div class="input">
+										<ul class="inputs-list inputs-list-hack">
+											<li>
+												<label>
+													<input name="radio" value="on" type="radio">
+													<span>on</span>
+												</label>
+											</li>
+											<li>
+												<label>
+													<input name="radio" value="off" type="radio">
+													<span>off</span>
+												</label>
+											</li>
+											<li>
+												<label>
+													<input name="radio" value="other" type="radio">
+													<span>other</span>
+												</label>
+											</li>
+										</ul>
+									</div>
+								</div><!-- /clearfix -->
+								
+								<input class="btn btn-info clickaction_name" type="button" value="autofill by name" />
+								<input class="btn btn-info clickaction_id" type="button" value="autofill by id" />
+								<input class="btn" type="reset" value="reset" />
+								
+							</fieldset>
+							
+						</form>
+						
+					</div>
+				</div>
+			</section>
+		
+		</div>
+			
+		<footer>
+			<p>Copyright © <span id="cp-y">2014</span> - <a href="http://www.creative-area.net" target="_blank">Creative Area</a></p>
+		</footer>
+		
+	</div>
+
+</body>
+</html>
