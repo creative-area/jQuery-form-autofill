@@ -1,0 +1,27 @@
+{
+	"name": "form-autofill",
+	"version": "0.1.0",
+	"title": "jQuery form auto fill",
+	"author": {
+		"name": "Creative Area",
+		"url": "http://www.creative-area.net/"
+	},
+	"licenses": [
+		{
+			"type": "GPL-2.0",
+			"url": "http://opensource.org/licenses/GPL-2.0"
+		},
+		{
+			"type": "MIT",
+			"url": "http://opensource.org/licenses/MIT"
+		}
+	],
+	"dependencies": {
+		"jquery": ">=1.5"
+	},
+	"description": "Simply autofill an empty form with data.",
+	"keywords": ["jquery","form","data","field","input","fill"],
+	"homepage": "http://labs.creative-area.net/jquery.formautofill/",
+	"docs": "http://labs.creative-area.net/jquery.formautofill/doc/",
+	"demo": "http://labs.creative-area.net/jquery.formautofill/demo/"
+}
