@@ -1,0 +1,17 @@
+{
+	"name": "form-autofill",
+	"version": "0.1.1",
+	"main": "jquery.formautofill.js",
+	"ignore": [
+		"**/.*",
+		"doc",
+		"demo",
+		"README.md",
+		"form-autofill.jquery.json",
+		"index.html",
+		"*.sublime-project"
+	],
+	"dependencies": {
+		"jquery": ">=1.5"
+	}
+}
