@@ -38,15 +38,15 @@
 						elt = ( settings.restrict ) ? self.find( selector ) : $( selector );
 						
 						if ( elt.length == 1 ) {
-							elt.val( ( elt.attr("type") == "checkbox" ) ? [v] : v );
+							elt.val( ( elt.attr("type") == "checkbox" ) ? [v] : v ).change();
 						} else if ( elt.length > 1 ) {
 							// radio
-							elt.val([v]);
+							elt.val([v]).change();
 						} else {
 							selector = '[name="'+k+'[]"]';
 							elt = ( settings.restrict ) ? self.find( selector ) : $( selector );
 							elt.each(function(){
-								$(this).val(v);
+								$(this).val(v).change();
 							});
 						}
 						
@@ -56,7 +56,7 @@
 						elt = ( settings.restrict ) ? self.find( selector ) : $( selector );
 						
 						if ( elt.length == 1 ) {
-							elt.val( ( elt.attr("type") == "checkbox" ) ? [v] : v );
+							elt.val( ( elt.attr("type") == "checkbox" ) ? [v] : v ).change();
 						} else {
 							var radiofound = false;
 							
@@ -70,7 +70,7 @@
 							if ( !radiofound ) {
 								elt = ( settings.restrict ) ? self.find( 'input:checkbox[name="'+k+'[]"]' ) : $( 'input:checkbox[name="'+k+'[]"]' );
 								elt.each(function(){
-									$(this).val(v);
+									$(this).val(v).change();
 								});
 							}
 						}
